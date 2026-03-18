@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Global AI Daily | 全球AI动态日报</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary: #00f5d4;
+            --secondary: #7b2cbf;
+            --accent: #ff6b6b;
+            --accent2: #ffd93d;
+            --accent3: #a855f7;
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(20, 20, 35, 0.8);
+            --text: #ffffff;
+            --text-muted: #a0a0b0;
+            --border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(0, 245, 212, 0.3);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 245, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.08) 0%, transparent 40%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(2%, 2%); }
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        header { text-align: center; padding: 60px 0 40px; }
+        .logo-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, var(--accent3), var(--primary));
+            padding: 8px 20px; border-radius: 30px; font-size: 0.85rem;
+            font-weight: 600; margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 20px var(--glow); } 50% { box-shadow: 0 0 40px var(--glow); } }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            background: linear-gradient(135deg, var(--primary), var(--accent3), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 12px;
+        }
+        .date { color: var(--text-muted); font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+        .summary {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 16px;
+            padding: 28px; margin: 40px 0;
+        }
+        .summary h2 { color: var(--primary); margin-bottom: 16px; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px; margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; text-align: center;
+        }
+        .stat-card .count { font-size: 2rem; font-weight: bold; color: var(--primary); }
+        .stat-card .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; }
+        .video-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px; margin-top: 20px;
+        }
+        .video-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 20px; transition: all 0.3s;
+        }
+        .video-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+        .video-title { font-size: 1rem; font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+        .video-channel { color: var(--accent); font-size: 0.85rem; margin-bottom: 12px; }
+        .video-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--primary); text-decoration: none; font-size: 0.9rem;
+        }
+        .video-link:hover { text-decoration: underline; }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 40px; }
+        @media (max-width: 768px) { .video-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header>
+            <div class="logo-badge"><span>⚡</span><span>24H UPDATE</span></div>
+            <h1>Global AI Daily</h1>
+            <p class="date">2026-03-18 · 全球AI动态日报</p>
+        </header>
+        
+        <section class="summary">
+            <h2>📊 今日要闻</h2>
+            <p>今日AI领域热点：NVIDIA GTC 2026、Claude 4.6、OpenAI新动态、YouTube热门AI视频等。共收录<strong>20</strong>条热门内容。</p>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="count">20</div><div class="label">YouTube视频</div></div>
+            </div>
+        </section>
+        
+        <h2 style="margin: 40px 0 20px;">📺 YouTube 热门AI视频</h2>
+        <div class="video-grid">
+
+            <div class="video-card">
+                <h3 class="video-title">AI Trends 2026: Quantum, Agentic AI &amp; Smarter Automation</h3>
+                <p class="video-channel">IBM Technology</p>
+                <a href="https://youtube.com/watch?v=zt0JA5rxdfM" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">How AI could impact your life in 2026</h3>
+                <p class="video-channel">ABC News</p>
+                <a href="https://youtube.com/watch?v=OpAZvUSeNaM" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">NVIDIA GTC 2026 Reveals 5 AI &amp; Robotics Inflection Points (AI NEWS</h3>
+                <p class="video-channel">AI News</p>
+                <a href="https://youtube.com/watch?v=CzTIduXcXMA" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">What can we expect from AI in 2026? | The Current</h3>
+                <p class="video-channel">CBC News</p>
+                <a href="https://youtube.com/watch?v=3w093nkLqCg" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Top 6 AI Trends That Will Define 2026 (backed by data)</h3>
+                <p class="video-channel">Jeff Su</p>
+                <a href="https://youtube.com/watch?v=B23W1gRT9eY" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">AI Triggers Mass Layoffs, Reshaping Future Of Tech Jobs In 2026? | Spo</h3>
+                <p class="video-channel">Firstpost</p>
+                <a href="https://youtube.com/watch?v=gLUC2WK4hsg" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">I Asked AI If Trump Loses Congress in 2026 MIDTERMS</h3>
+                <p class="video-channel">I Ask AI</p>
+                <a href="https://youtube.com/watch?v=07rYtfyFa-Y" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">What You Absolutely NEED to Know About AI in 2026</h3>
+                <p class="video-channel">The AI Advantage</p>
+                <a href="https://youtube.com/watch?v=K0UwutA4utA" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">2026 will be an &#39;explosive year&#39; for AI, says SandboxAQ CEO Ja</h3>
+                <p class="video-channel">CNBC Television</p>
+                <a href="https://youtube.com/watch?v=h9wv4UJKaSg" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Top 17 New Technology Trends That Will Define 2026</h3>
+                <p class="video-channel">AI Uncovered</p>
+                <a href="https://youtube.com/watch?v=Otim2mDjsYM" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Godfather of AI Says 2026 Could Be the &quot;Job Shock&quot; Year | Va</h3>
+                <p class="video-channel">Firstpost</p>
+                <a href="https://youtube.com/watch?v=2jfaYmXVOao" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">50 AI Predictions for 2026 - Part 1</h3>
+                <p class="video-channel">The AI Daily Brief: Artificial Intelligence News</p>
+                <a href="https://youtube.com/watch?v=p97xD1fBLXo" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Essential AI Skills For 2026</h3>
+                <p class="video-channel">Tina Huang</p>
+                <a href="https://youtube.com/watch?v=jm2jBW462bU" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">My Honest Thoughts on AI and the Job Market in 2026 (No Hype)</h3>
+                <p class="video-channel">Tech With Tim</p>
+                <a href="https://youtube.com/watch?v=PEFso88LkC4" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">AI Is About to Change Coding Forever in 2026 - &quot;Software Engineer</h3>
+                <p class="video-channel">TheAIGRID</p>
+                <a href="https://youtube.com/watch?v=GzygJtYmtCY" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Top 15 New Technology Trends That Will Define 2026 [Part 2]</h3>
+                <p class="video-channel">AI Uncovered</p>
+                <a href="https://youtube.com/watch?v=f-FyMY1LMwI" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">The AI Takeover Starts in 2026</h3>
+                <p class="video-channel">Future Business Tech</p>
+                <a href="https://youtube.com/watch?v=tMr5JSZP9cw" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">AI at CES 2026 Is Insane: Here’s What’s Coming</h3>
+                <p class="video-channel">AI Revolution</p>
+                <a href="https://youtube.com/watch?v=O6qrzEqAP7A" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Boston Dynamics Reveals 2026 Atlas Endgame (AI NEWS)</h3>
+                <p class="video-channel">AI News</p>
+                <a href="https://youtube.com/watch?v=UAQeSRnuBN0" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+            <div class="video-card">
+                <h3 class="video-title">Googles AI Boss Reveals What AI In 2026 Looks Like</h3>
+                <p class="video-channel">TheAIGRID</p>
+                <a href="https://youtube.com/watch?v=FTjTcrX-aGw" class="video-link" target="_blank">观看视频 →</a>
+            </div>
+
+        </div>
+        
+        <footer>
+            <p>📅 每日更新 · 数据来源：YouTube API</p>
+            <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.6;">Generated on 2026-03-18</p>
+        </footer>
+    </div>
+</body>
+</html>
