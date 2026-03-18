@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物行业外贸动态 | Pet Industry Trade Daily</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Playfair+Display:wght@400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a1a2e;
+            --accent: #c41e3a;
+            --gold: #d4af37;
+            --cream: #fdf5e6;
+            --ink: #2c2c2c;
+            --light-gray: #f0f0f0;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', 'Noto Serif SC', serif;
+            background: #f5f5f5;
+            color: var(--ink);
+            line-height: 1.6;
+        }
+        
+        .newspaper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--cream);
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .sub-brand {
+            font-size: 1.2rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.8);
+            margin-top: 5px;
+        }
+        
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+        }
+        
+        .date {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .edition {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Navigation */
+        .nav-bar {
+            background: var(--ink);
+            padding: 12px 0;
+            text-align: center;
+        }
+        
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            margin: 0 5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .nav-bar a:hover {
+            color: var(--gold);
+        }
+        
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 30px 40px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: '■';
+            color: var(--accent);
+        }
+        
+        /* Cards */
+        .news-card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-color: var(--gold);
+        }
+        
+        .news-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .news-card .source {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .news-card .date {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 8px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            border-left: 2px solid var(--gold);
+            padding-left: 25px;
+        }
+        
+        .stat-box {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stat-box .number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .stat-box .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+        
+        /* Section Grid */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+            .brand {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .newspaper {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper">
+        <header class="header">
+            <div class="header-content">
+                <div class="brand">🐾 Pet Industry Daily</div>
+                <div class="sub-brand">宠物行业外贸动态 | 2026年3月18日</div>
+                <div class="meta-info">
+                    <span class="edition">第 1 期</span>
+                    <span class="date">2026-03-18</span>
+                    <span>来源: YouTube API 全球采集</span>
+                </div>
+            </div>
+        </header>
+        
+        <nav class="nav-bar">
+            <a href="#food">食品·保健品</a>
+            <a href="#supplies">用品·配件</a>
+            <a href="#tech">智能设备</a>
+            <a href="#ecommerce">电商·跨境</a>
+            <a href="#trends">展会·趋势</a>
+        </nav>
+        
+        <div class="main-content">
+            <main>
+                <!-- 宠物食品与保健品 -->
+                <section id="food">
+                    <h2 class="section-title">🐟 宠物食品与保健品</h2>
+                    <div class="section-grid">
+                        <div class="news-card">
+                            <span class="tag">出口</span>
+                            <h3>Start Pet Food Export Business in 2026 - Global Demand Rising</h3>
+                            <div class="source">Galaxy Export Import Training Centre</div>
+                            <div class="date">宠物食品出口业务指南</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">代工</span>
+                            <h3>Premium Pet Food Manufacturing - From Factory to Bowl</h3>
+                            <div class="source">Yutong Tian</div>
+                            <div class="date">OEM/ODM工厂供应全球品牌</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">市场</span>
+                            <h3>Insight Report on Overseas Opportunities for 2026 China's Pet Food Industry</h3>
+                            <div class="source">陶醉 Salon</div>
+                            <div class="date">2026中国宠物食品海外机会报告</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">品牌</span>
+                            <h3>How Waggles Foods Built a Pet Food Brand for Pakistan and Middle East</h3>
+                            <div class="source">Nukta Business</div>
+                            <div class="date">宠物食品品牌拓展中东市场案例</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">出口</span>
+                            <h3>Export Pet Food from India - Billion Dollar Market</h3>
+                            <div class="source">Connecting India Exim Solution</div>
+                            <div class="date">印度宠物食品出口机遇</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">生产</span>
+                            <h3>Pet Lecithin Machine - Pet Health Supplement Equipment</h3>
+                            <div class="source">Shangqiu Fuda Food Machinery</div>
+                            <div class="date">宠物保健品生产设备</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">品质</span>
+                            <h3>Stop Chasing Low Prices - What Really Makes a Quality Pet Supplement</h3>
+                            <div class="source">LiangChongBiotech</div>
+                            <div class="date">优质宠物保健品代工要点</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">出口</span>
+                            <h3>Pet Nutritional Supplement Export Orders - Urgent Shipping</h3>
+                            <div class="source">GlobalGlamourpets</div>
+                            <div class="date">宠物营养补充剂出口订单</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">生产</span>
+                            <h3>Pet food production factory - Pet snacks import and export wholesale</h3>
+                            <div class="source">连通</div>
+                            <div class="date">宠物零食进出口批发</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">代工</span>
+                            <h3>Pet Nutritional Supplements Factory - OEM/ODM Manufacturer</h3>
+                            <div class="source">GlobalGlamourpets</div>
+                            <div class="date">全球品牌宠物营养品代工厂</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 宠物用品与配件 -->
+                <section id="supplies">
+                    <h2 class="section-title">🧸 宠物用品与配件</h2>
+                    <div class="section-grid">
+                        <div class="news-card">
+                            <span class="tag">批发</span>
+                            <h3>Wholesale Pet Supplies with Low MOQ - Start with Just One Carton</h3>
+                            <div class="source">Petfairs</div>
+                            <div class="date">低MOQ宠物用品批发</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">床品</span>
+                            <h3>Wholesale Pet Beds USA - Private Label Dog & Cat Beds</h3>
+                            <div class="source">LoveBite | Pet Wholesale | USA</div>
+                            <div class="date">美国宠物床品私牌供应</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">玩具</span>
+                            <h3>Wholesale Dog Toys USA - High-Margin Private Label Dog Toy Supplier</h3>
+                            <div class="source">LoveBite | Pet Wholesale | USA</div>
+                            <div class="date">高利润宠物玩具批发</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">玩具</span>
+                            <h3>TOP 10 BEST Interactive Dog Toys 2026 - Smart Dog Toys</h3>
+                            <div class="source">LOL PETS USA</div>
+                            <div class="date">2026热门互动狗玩具</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">趋势</span>
+                            <h3>New Pet supplies winning products 2026</h3>
+                            <div class="source">KIUIX SHOP</div>
+                            <div class="date">2026宠物用品爆款</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">美容</span>
+                            <h3>Wholesale Pet Grooming Tools USA - Private Label Supplier</h3>
+                            <div class="source">LoveBite | Pet Wholesale | USA</div>
+                            <div class="date">美容工具私牌供应</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">美容</span>
+                            <h3>Wholesale Pet Bathing Equipment USA - Start or Scale Your Brand</h3>
+                            <div class="source">LoveBite | Pet Wholesale | USA</div>
+                            <div class="date">宠物沐浴设备批发</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">牵引</span>
+                            <h3>Dog collar and leash OEM/ODM factory</h3>
+                            <div class="source">Pet supplies factory</div>
+                            <div class="date">项圈牵引绳OEM/ODM工厂</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">定制</span>
+                            <h3>Neoprene Pet Collar, Harness & Leash Manufacturer - OEM</h3>
+                            <div class="source">Hong Yu</div>
+                            <div class="date">氯丁橡胶宠物项圈制造</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">定制</span>
+                            <h3>Custom Martingale Dog Collars Manufacturing</h3>
+                            <div class="source">Rye Xie</div>
+                            <div class="date">定制狗项圈生产</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">工厂</span>
+                            <h3>Pet products manufacturer - pet harnesses leashes set</h3>
+                            <div class="source">Zhengyongpet</div>
+                            <div class="date">宠物背带牵引绳套裝</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">配件</span>
+                            <h3>Wholesale Cotton Dog Leash Sets - MOQ 100pcs</h3>
+                            <div class="source">Pet products manufacturing</div>
+                            <div class="date">棉质狗牵引绳套装批发</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 宠物智能设备 -->
+                <section id="tech">
+                    <h2 class="section-title">📱 宠物智能设备</h2>
+                    <div class="section-grid">
+                        <div class="news-card">
+                            <span class="tag">趋势</span>
+                            <h3>Save the Planet While Spoiling Your Pet - 2026 Trend!</h3>
+                            <div class="source">InfoVerse Daily</div>
+                            <div class="date">2026环保宠物用品趋势</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">智能</span>
+                            <h3>Smart Home Integration for Sustainable Pet Care - Eco-Friendly Pet Tech</h3>
+                            <div class="source">GoEcoPaw</div>
+                            <div class="date">可持续宠物护理智能家居</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">玩具</span>
+                            <h3>Top 5 Magic Organ Cat Toy Cat Accordion 2026</h3>
+                            <div class="source">Top Picks</div>
+                            <div class="date">2026热门猫玩具</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">智能</span>
+                            <h3>Smart Gadgets for Happy Pets!</h3>
+                            <div class="source">Skyyrizoncom</div>
+                            <div class="date">宠物智能设备</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">AI</span>
+                            <h3>India's Viral AI Robot Dog - Smartest Toy of 2026</h3>
+                            <div class="source">Ashab Toys Sadar Bazar Delhi</div>
+                            <div class="date">印度AI机器狗爆款</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">训练</span>
+                            <h3>Best Dog Puzzle Toy for Smart Training 2026</h3>
+                            <div class="source">AmazingGadgets</div>
+                            <div class="date">智能训练狗玩具</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 宠物电商与跨境 -->
+                <section id="ecommerce">
+                    <h2 class="section-title">🌐 宠物电商与跨境贸易</h2>
+                    <div class="section-grid">
+                        <div class="news-card">
+                            <span class="tag">电商</span>
+                            <h3>Pet Supplies Wholesale Business in Dubai - Import, Setup & Growth</h3>
+                            <div class="source">Meydan Free Zone</div>
+                            <div class="date">迪拜宠物用品批发商机</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">电商</span>
+                            <h3>Why Pet-Friendly Product Positioning Drives Cross-Border Store Growth</h3>
+                            <div class="source">Airsang Visual Design</div>
+                            <div class="date">宠物友好产品定位策略</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">电商</span>
+                            <h3>From Ordinary Home Textiles to Pet Essentials in Cross-Border E-Commerce</h3>
+                            <div class="source">Airsang web design</div>
+                            <div class="date">家纺转型宠物用品跨境电商</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">品牌</span>
+                            <h3>A Million-Dollar Pet Brand Powered by Smart Website Design</h3>
+                            <div class="source">Airsang web design</div>
+                            <div class="date">百万级宠物品牌网站案例</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">批发</span>
+                            <h3>Wholesale Made Easy - Export from the U.S. with ContarMarket</h3>
+                            <div class="source">Contarmarket</div>
+                            <div class="date">美国批发出口平台</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">批发</span>
+                            <h3>The Key to Stability - Wholesale Pet Toy Source & Export Coffee Wood</h3>
+                            <div class="source">Coffee Wood Chew</div>
+                            <div class="date">稳定供应链咖啡木玩具</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">市场</span>
+                            <h3>Profitable Pet Brand Business with China's Top 3 Markets - Low MOQ, High Margin</h3>
+                            <div class="source">BusinessXP</div>
+                            <div class="date">中国三大宠物市场商机</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">独立站</span>
+                            <h3>A Smart Niche Strategy Behind a Successful Pet-Friendly Home Textile Website</h3>
+                            <div class="source">Airsang Graphic Design</div>
+                            <div class="date">宠物用品独立站利基策略</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 宠物展会与市场趋势 -->
+                <section id="trends">
+                    <h2 class="section-title">📊 宠物展会与市场趋势</h2>
+                    <div class="section-grid">
+                        <div class="news-card">
+                            <span class="tag">展会</span>
+                            <h3>Asia's biggest Pet Industry Exhibition - Pet Fair Asia 2026 Shanghai</h3>
+                            <div class="source">ハルカゼツアー</div>
+                            <div class="date">2026亚洲最大宠物展</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">展会</span>
+                            <h3>16th IIPTF 2026 - India's Largest Pet Trade Fair</h3>
+                            <div class="source">IIPTF India International Pet Trade Fair</div>
+                            <div class="date">印度最大宠物贸易展</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">展会</span>
+                            <h3>Interzoo 2026 - 16 Countries One Show - Global Pet Industry Tour</h3>
+                            <div class="source">Interzoo</div>
+                            <div class="date">2026德国纽伦堡宠物展</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">市场</span>
+                            <h3>Sustainability as a Growth Strategy in the Pet Industry</h3>
+                            <div class="source">Vital Pet Life</div>
+                            <div class="date">宠物行业可持续发展策略</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">市场</span>
+                            <h3>The Pet Industry Is Booming</h3>
+                            <div class="source">HIRE YOURSELF</div>
+                            <div class="date">宠物行业蓬勃发展</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">市场</span>
+                            <h3>MERCADO PET 2026 - O ANO DOS PEQUENOS PET SHOP</h3>
+                            <div class="source">Central Pet : Uma Jornada de sucesso</div>
+                            <div class="date">2026巴西宠物市场趋势</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">市场</span>
+                            <h3>Breaking: Why Pet Companies Said 'We Won't Play'</h3>
+                            <div class="source">Cricket Fever Jayant</div>
+                            <div class="date">宠物行业重大更新</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">展会</span>
+                            <h3>Hong Kong Pet Expo 2026 - Is the Pet Market Cooling Down?</h3>
+                            <div class="source">Atong DDchannel</div>
+                            <div class="date">香港宠物展2026</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">批发</span>
+                            <h3>Wholesale Betta Fish Supply - 10,000 Bettas Weekly!</h3>
+                            <div class="source">Betta Pro Thailand</div>
+                            <div class="date">泰国斗鱼每周供货万条</div>
+                        </div>
+                        <div class="news-card">
+                            <span class="tag">物流</span>
+                            <h3>In the 12th Shenzhen Pet Fair - China Supplier</h3>
+                            <div class="source">Shenzhen Senghor Sea & Air Logistics</div>
+                            <div class="date">深圳宠物展物流服务</div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+            <aside class="sidebar">
+                <div class="stat-box">
+                    <div class="number">50+</div>
+                    <div class="label">今日资讯</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">5</div>
+                    <div class="label">内容角度</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">25+</div>
+                    <div class="label">数据来源</div>
+                </div>
+                
+                <div class="news-card" style="background: var(--primary); color: white;">
+                    <h3 style="color: var(--gold);">📌 外贸提示</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px; color: rgba(255,255,255,0.8);">
+                        • 低MOQ供货成为趋势<br>
+                        • 环保可持续产品热度上升<br>
+                        • 智能宠物设备增长迅速<br>
+                        • 中东和东南亚市场活跃
+                    </p>
+                </div>
+                
+                <div class="news-card">
+                    <h3>🔑 热门关键词</h3>
+                    <p style="font-size: 0.85rem; margin-top: 10px; color: #666;">
+                        #PetFood #PetSupplies #OEM #ODM #PrivateLabel #Wholesale #CrossBorder #PetExpo #PetTech #Sustainable
+                    </p>
+                </div>
+                
+                <div class="news-card">
+                    <h3>🌍 目标市场</h3>
+                    <p style="font-size: 0.85rem; margin-top: 10px; color: #666;">
+                        美国 · 迪拜 · 德国 · 印度<br>
+                        巴西 · 东南亚 · 中东
+                    </p>
+                </div>
+            </aside>
+        </div>
+        
+        <footer class="footer">
+            <p>宠物行业外贸动态 Daily | 每日更新 | 数据来源: YouTube API 全球采集</p>
+            <p style="margin-top: 10px;">Generated on 2026-03-18</p>
+        </footer>
+    </div>
+</body>
+</html>
