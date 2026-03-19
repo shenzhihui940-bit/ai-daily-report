@@ -3,434 +3,873 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球AI资讯 | AI Daily Report</title>
+    <title>AI日报 | 全球AI资讯 & AI设计专题</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #fafafa; --bg-card: #fff; --text: #1a1a1a; --text-sec: #666; --text-ter: #999; --border: #e8e8e8; --accent: #2563eb; --accent-light: #dbeafe; }
+        :root { --bg: #fafafa; --bg-card: #fff; --text: #1a1a1a; --text-sec: #666; --text-ter: #999; --border: #e8e8e8; --accent: #2563eb; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
-        header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 40px 20px; text-align: center; }
-        .brand { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 12px; }
-        h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-        .subtitle { color: var(--text-sec); font-size: 15px; }
-        .nav { display: flex; justify-content: center; gap: 30px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
-        .nav a { color: var(--text-sec); text-decoration: none; font-size: 14px; }
-        .nav a:hover, .nav a.active { color: var(--accent); }
-        .date { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 8px 16px; background: var(--accent-light); color: var(--accent); border-radius: 20px; font-size: 13px; font-weight: 500; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        .section { margin-bottom: 48px; }
-        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
-        .section-icon { font-size: 18px; }
-        .section-title { font-size: 17px; font-weight: 700; }
-        .section-title.blue { color: #1e40af; }
-        .section-title.green { color: #059669; }
-        .section-title.purple { color: #7c3aed; }
-        .section-title.orange { color: #ea580c; }
-        .section-title.red { color: #dc2626; }
-        .section-title.cyan { color: #0891b2; }
-        .news-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 14px; transition: all 0.2s; }
-        .news-item:hover { border-color: var(--accent); }
-        .news-title { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 10px; }
+        
+        /* Header */
+        header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 30px 20px; text-align: center; position: sticky; top: 0; z-index: 100; }
+        .brand { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+        .subtitle { color: var(--text-sec); font-size: 14px; margin-bottom: 20px; }
+        
+        /* 专题导航 */
+        .topic-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .topic-btn { 
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border: 2px solid var(--border); border-radius: 8px;
+            background: var(--bg-card); color: var(--text-sec); font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .topic-btn:hover { border-color: var(--accent); }
+        .topic-btn.active { 
+            background: var(--accent); color: #fff; border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        .topic-btn.design-active { background: #db2777; border-color: #db2777; box-shadow: 0 4px 12px rgba(219, 39, 119, 0.3); }
+        
+        /* 模块导航 */
+        .module-nav { 
+            display: none; justify-content: center; flex-wrap: wrap; gap: 8px;
+            padding: 15px; background: rgba(37, 99, 235, 0.05); border-radius: 8px; margin: 0 20px 20px;
+        }
+        .module-nav.design { background: rgba(219, 39, 119, 0.05); }
+        .module-nav.visible { display: flex; }
+        .module-btn {
+            padding: 8px 16px; border: 1px solid var(--border); border-radius: 20px;
+            background: var(--bg-card); color: var(--text-sec); font-size: 13px;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .module-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .module-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .module-btn.design:hover { border-color: #db2777; color: #db2777; }
+        .module-btn.design.active { background: #db2777; border-color: #db2777; }
+        
+        /* Container */
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Topic Content */
+        .topic-content { display: none; }
+        .topic-content.active { display: block; }
+        
+        /* Section */
+        .section { margin-bottom: 30px; scroll-margin-top: 200px; }
+        .section-header { 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 20px; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 8px; cursor: pointer; transition: all 0.2s;
+        }
+        .section-header:hover { border-color: var(--accent); }
+        .section-header-left { display: flex; align-items: center; gap: 12px; }
+        .section-icon { font-size: 20px; }
+        .section-title { font-size: 16px; font-weight: 600; }
+        .section-count { 
+            font-size: 12px; color: var(--text-ter); background: var(--bg);
+            padding: 2px 10px; border-radius: 12px;
+        }
+        .toggle-btn { 
+            font-size: 18px; color: var(--text-ter); width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 6px; transition: all 0.2s;
+        }
+        .toggle-btn:hover { background: var(--bg); }
+        .toggle-btn.collapsed { transform: rotate(-90deg); }
+        
+        .section-content { 
+            padding: 15px 0; max-height: 20000px; overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .section-content.collapsed { max-height: 0; padding: 0; }
+        
+        /* News Item */
+        .news-item { 
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 8px; padding: 18px 20px; margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .news-item:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .news-title { font-size: 15px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
         .news-title a { color: var(--text); text-decoration: none; }
         .news-title a:hover { color: var(--accent); }
-        .news-summary { color: var(--text-sec); font-size: 14px; line-height: 1.7; margin-bottom: 12px; }
-        .news-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-ter); }
+        .news-summary { color: var(--text-sec); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+        .news-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-ter); }
         .news-source { font-weight: 500; color: var(--text-sec); }
-        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-ter); font-size: 13px; }
-        @media (max-width: 600px) { h1 { font-size: 24px; } .container { padding: 24px 16px; } .nav { gap: 15px; flex-wrap: wrap; } }
+        
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-ter); font-size: 13px; margin-top: 40px; }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            h1 { font-size: 22px; }
+            .topic-btn { padding: 10px 16px; font-size: 14px; }
+            .module-nav { margin: 0 10px 15px; }
+            .container { padding: 15px; }
+            .section-header { padding: 12px 15px; }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="brand">AI DAILY REPORT</div>
-        <h1>全球AI资讯</h1>
-        <p class="subtitle">Global AI News Aggregation</p>
-        <div class="nav">
-            <a href="index.html" class="active">全球AI资讯</a>
-            <a href="design.html">AI设计专题</a>
+        <h1>📰 AI日报</h1>
+        <p class="subtitle">全球AI资讯 · AI设计专题 | 2026年03月19日</p>
+        
+        <!-- 专题导航 -->
+        <div class="topic-nav">
+            <button class="topic-btn active" data-topic="global" onclick="switchTopic('global')">
+                <span>🌐</span>
+                <span>全球AI资讯</span>
+            </button>
+            <button class="topic-btn" data-topic="design" onclick="switchTopic('design')">
+                <span>🎨</span>
+                <span>AI设计专题</span>
+            </button>
         </div>
-        <div class="date">📅 2026年03月19日</div>
+        
+        <!-- 模块导航 - 全球AI -->
+        <div class="module-nav visible" id="module-nav-global">
+            <button class="module-btn" onclick="scrollToModule('global-industry')">行业与商业</button>
+            <button class="module-btn" onclick="scrollToModule('global-research')">学术研究</button>
+            <button class="module-btn" onclick="scrollToModule('global-products')">新品动态</button>
+            <button class="module-btn" onclick="scrollToModule('global-tech')">技术实践</button>
+            <button class="module-btn" onclick="scrollToModule('global-overseas')">海外讨论</button>
+            <button class="module-btn" onclick="scrollToModule('global-domestic')">国内动态</button>
+        </div>
+        
+        <!-- 模块导航 - AI设计 -->
+        <div class="module-nav design" id="module-nav-design">
+            <button class="module-btn design" onclick="scrollToModule('design-new_products')">新品动态</button>
+            <button class="module-btn design" onclick="scrollToModule('design-cases')">案例赏析</button>
+            <button class="module-btn design" onclick="scrollToModule('design-tool_innovation')">工具创新</button>
+            <button class="module-btn design" onclick="scrollToModule('design-openclaw_design')">OpenClaw</button>
+        </div>
     </header>
     
     <div class="container">
+        <!-- 全球AI资讯 -->
+        <div class="topic-content active" id="topic-global">
 
-        <section class="section">
-            <div class="section-header">
-                <span class="section-icon">■</span>
-                <h2 class="section-title blue">行业与商业</h2>
-            </div>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.tmtpost.com/7918419.html" target="_blank">北京启动专项行动整治涉AI网络乱象；腾讯QClaw即将上线</a></h3>
-                <p class="news-summary">北京启动专项行动整治五类涉AI领域网络乱象；腾讯QClaw即将上线并打通微信入口；字节豆包AI眼镜或将取消上市；英伟达入局AI服务器系统，押注下一个万亿级市场机遇。</p>
-                <div class="news-meta">
-                    <span class="news-source">钛媒体</span>
-                    <span>·</span>
-                    <span>2026-03-18</span>
+            <section class="section" id="global-industry">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">■</span>
+                        <span class="section-title">行业与商业</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://thenextweb.com/news/aws-pioneers-2026-european-ai-startups-cohort" target="_blank">AWS公布12家欧洲AI初创企业：覆盖海洋测绘、白血病诊断与空袭预测</a></h3>
-                <p class="news-summary">亚马逊云科技发布2026年AWS Pioneers第二批入选名单，12家欧洲AI初创企业横跨医疗、气候和冲突预警等领域。AWS警告：若欧洲监管环境不改善，顶尖创新者可能加速流失。</p>
-                <div class="news-meta">
-                    <span class="news-source">TNW</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.tmtpost.com/7918419.html" target="_blank">北京启动专项行动整治涉AI网络乱象；腾讯QClaw即将上线</a></h3>
+                        <p class="news-summary">北京启动专项行动整治五类涉AI领域网络乱象；腾讯QClaw即将上线并打通微信入口；字节豆包AI眼镜或将取消上市；英伟达入局AI服务器系统。</p>
+                        <div class="news-meta">
+                            <span class="news-source">钛媒体</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://thenextweb.com/" target="_blank">AWS公布12家欧洲AI初创企业：覆盖海洋测绘、白血病诊断</a></h3>
+                        <p class="news-summary">亚马逊云科技发布2026年AWS Pioneers第二批入选名单，12家欧洲AI初创企业横跨医疗、气候和冲突预警等领域。</p>
+                        <div class="news-meta">
+                            <span class="news-source">TNW</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.technologyreview.com/" target="_blank">五角大楼计划让AI公司在机密数据上训练军事专用模型</a></h3>
+                        <p class="news-summary">美国国防部正在讨论为Anthropic等生成式AI公司搭建安全隔离环境，允许其在机密数据上训练军事专用版本模型。</p>
+                        <div class="news-meta">
+                            <span class="news-source">MIT Tech Review</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://techcrunch.com/" target="_blank">Mistral押注"自建AI"，正面挑战OpenAI企业市场</a></h3>
+                        <p class="news-summary">Mistral推出Mistral Forge，允许企业用自有数据从头训练定制AI模型，主打数据主权和深度定制。</p>
+                        <div class="news-meta">
+                            <span class="news-source">TechCrunch</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.reuters.com/" target="_blank">制药巨头开始抢购AI芯片，英伟达入局AI服务器系统</a></h3>
+                        <p class="news-summary">诺华、辉瑞等制药巨头正大规模采购AI芯片用于药物研发。英伟达宣布进军AI服务器整机市场。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Reuters</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.technologyreview.com/" target="_blank">五角大楼计划让AI公司在机密数据上训练军事专用模型</a></h3>
-                <p class="news-summary">美国国防部正在讨论为Anthropic等生成式AI公司搭建安全隔离环境，允许其在机密数据上训练军事专用版本模型。Claude等商业AI已在部分军事场景中投入使用。</p>
-                <div class="news-meta">
-                    <span class="news-source">MIT Tech Review</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+            <section class="section" id="global-research">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">■</span>
+                        <span class="section-title">学术研究</span>
+                        <span class="section-count">4条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://techcrunch.com/" target="_blank">Mistral押注"自建AI"，正面挑战OpenAI和Anthropic企业市场</a></h3>
-                <p class="news-summary">Mistral推出Mistral Forge，允许企业用自有数据从头训练定制AI模型，主打数据主权和深度定制，试图在企业AI市场撕开一道口子。</p>
-                <div class="news-meta">
-                    <span class="news-source">TechCrunch</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.nature.com/" target="_blank">DeepMind发布AlphaFold 3：蛋白质预测精度再创新高</a></h3>
+                        <p class="news-summary">AlphaFold 3不仅能预测蛋白质结构，还能预测DNA、RNA及小分子相互作用。在最新基准测试中，预测准确率较上代提升50%。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Nature</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://hai.stanford.edu/" target="_blank">斯坦福HAI发布《2026年AI指数报告》：中美AI差距正在缩小</a></h3>
+                        <p class="news-summary">报告指出中国在AI专利数量、工业应用方面领先，美国在基础研究、顶尖模型方面保持优势。全球AI投资达1540亿美元。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Stanford HAI</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://arxiv.org/" target="_blank">UC Berkeley提出"思维链蒸馏"新方法</a></h3>
+                        <p class="news-summary">研究团队提出CoD方法，将大模型的思维链推理能力有效迁移到1B参数以下的小模型，在数学推理任务上准确率提升35%。</p>
+                        <div class="news-meta">
+                            <span class="news-source">arXiv</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://openai.com/research/" target="_blank">OpenAI与洛斯阿拉莫斯实验室合作研究AI生物安全风险</a></h3>
+                        <p class="news-summary">合作研究聚焦于GPT-4级别模型协助制造生物武器的可能性。初步结论：当前模型可辅助已有专家，但不足以让非专家独立完成。</p>
+                        <div class="news-meta">
+                            <span class="news-source">OpenAI Research</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.reuters.com/" target="_blank">制药巨头开始抢购AI芯片，英伟达入局AI服务器系统</a></h3>
-                <p class="news-summary">诺华、辉瑞等制药巨头正大规模采购AI芯片用于药物研发。英伟达同时宣布进军AI服务器整机市场，直接销售DGX系统而非仅提供GPU。</p>
-                <div class="news-meta">
-                    <span class="news-source">Reuters</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
+            <section class="section" id="global-products">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">■</span>
+                        <span class="section-title">新品动态</span>
+                        <span class="section-count">6条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
-</section>
+                <div class="section-content">
 
-        <section class="section">
-            <div class="section-header">
-                <span class="section-icon">■</span>
-                <h2 class="section-title green">学术研究</h2>
-            </div>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.anthropic.com/" target="_blank">Claude 4.6正式发布：推理能力大幅提升，支持百万token上下文</a></h3>
+                        <p class="news-summary">推理能力较前代提升40%，支持100万token超长上下文。新增"深度思考"模式，企业版已上线，API价格降低25%。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Anthropic</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.nature.com/" target="_blank">DeepMind发布AlphaFold 3：蛋白质预测精度再创新高</a></h3>
-                <p class="news-summary">AlphaFold 3不仅能预测蛋白质结构，还能预测DNA、RNA及小分子相互作用。在最新基准测试中，预测准确率较上代提升50%，已开源供科研社区使用。</p>
-                <div class="news-meta">
-                    <span class="news-source">Nature</span>
-                    <span>·</span>
-                    <span>2026-03-18</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://runwayml.com/" target="_blank">Runway Gen-4发布：影视级AI视频生成，单镜头可达60秒</a></h3>
+                        <p class="news-summary">支持生成60秒连续镜头，角色一致性显著提升。新增"导演模式"，可精确控制摄像机运动和场景转换。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Runway</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.midjourney.com/" target="_blank">Midjourney V7引入"Character Lock"：角色一致性革命性突破</a></h3>
+                        <p class="news-summary">可在不同场景、角度、风格中保持同一角色的面部特征和服装细节。支持"风格混合"功能。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Midjourney</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://cursor.sh/" target="_blank">Cursor AI IDE 1.0正式发布，集成Claude 4和GPT-5</a></h3>
+                        <p class="news-summary">新增"Composer"功能，可根据自然语言描述直接生成完整项目。支持30+编程语言，月活开发者突破200万。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Cursor</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.perplexity.ai/" target="_blank">Perplexity推出Sonar Pro：面向企业的深度研究AI</a></h3>
+                        <p class="news-summary">专为金融、咨询、法律行业设计，支持多源信息交叉验证、生成带引用链接的研究报告。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Perplexity</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://yiyan.baidu.com/" target="_blank">百度文心一言5.0发布：中文理解能力对标GPT-5</a></h3>
+                        <p class="news-summary">在中文理解、古诗词生成、行业知识方面超越GPT-5。新增"文心代码"功能，支持50+编程语言。</p>
+                        <div class="news-meta">
+                            <span class="news-source">百度</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://hai.stanford.edu/" target="_blank">斯坦福HAI发布《2026年AI指数报告》：中美AI差距正在缩小</a></h3>
-                <p class="news-summary">报告指出中国在AI专利数量、工业应用方面领先，美国在基础研究、顶尖模型方面保持优势。全球AI投资达1540亿美元，较上年增长27%。</p>
-                <div class="news-meta">
-                    <span class="news-source">Stanford HAI</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+            <section class="section" id="global-tech">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">■</span>
+                        <span class="section-title">技术实践</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://arxiv.org/" target="_blank">UC Berkeley提出"思维链蒸馏"新方法：小模型也能具备推理能力</a></h3>
-                <p class="news-summary">研究团队提出CoD（Chain of Distillation）方法，将大模型的思维链推理能力有效迁移到1B参数以下的小模型，在数学推理任务上准确率提升35%。</p>
-                <div class="news-meta">
-                    <span class="news-source">arXiv</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://dev.to/" target="_blank">FoodLens：用GPT-4o视觉模型与SAM构建实时营养成分分析引擎</a></h3>
+                        <p class="news-summary">结合GPT-4o视觉能力和Meta SAM图像分割，让手机直接"看"食物并实时分析营养成分。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Dev.to</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://dev.to/" target="_blank">Claude Code在React开发中的模式分析：做对了什么，翻车在哪</a></h3>
+                        <p class="news-summary">Claude Code在组件拆分、Hook抽象等方面表现可靠，但作者总结了三个一致性失误点。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Dev.to</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.infoq.com/" target="_blank">QCon London 2026：如何为生产级AI系统构建可靠的RAG检索能力</a></h3>
+                        <p class="news-summary">荷兰合作银行AI技术负责人分享服务300+内部用户的RAG系统经验：大多数故障根源在于索引质量。</p>
+                        <div class="news-meta">
+                            <span class="news-source">InfoQ</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://dev.to/" target="_blank">10个开源仓库揭示AI时代的"开发漂移"现象</a></h3>
+                        <p class="news-summary">谷歌DORA研究发现悖论：AI代码用得越多，某些开发质量指标反而下滑。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Dev.to</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://towardsdatascience.com/" target="_blank">自托管你的第一个大语言模型：从零开始的完整指南</a></h3>
+                        <p class="news-summary">覆盖隐私保护、成本控制和个性化定制三大核心需求，手把手教你如何本地部署和运行LLM。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Towards Data Science</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://openai.com/research/" target="_blank">OpenAI与洛斯阿拉莫斯国家实验室合作研究AI生物安全风险</a></h3>
-                <p class="news-summary">合作研究聚焦于GPT-4级别模型协助制造生物武器的可能性。初步结论：当前模型可辅助已有专家，但不足以让非专家独立完成危险研究。</p>
-                <div class="news-meta">
-                    <span class="news-source">OpenAI Research</span>
-                    <span>·</span>
-                    <span>2026-03-15</span>
+            <section class="section" id="global-overseas">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">■</span>
+                        <span class="section-title">海外讨论</span>
+                        <span class="section-count">7条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
-</section>
+                <div class="section-content">
 
-        <section class="section">
-            <div class="section-header">
-                <span class="section-icon">■</span>
-                <h2 class="section-title orange">新品动态</h2>
-            </div>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.reddit.com/r/programming/" target="_blank">Reddit r/programming热议：AI会取代程序员吗？</a></h3>
+                        <p class="news-summary">12.3k赞讨论。观点两极分化：有人认为AI只是工具，有人担忧初级程序员岗位将在3年内消失。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Reddit</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.anthropic.com/" target="_blank">Claude 4.6正式发布：推理能力大幅提升，支持百万token上下文</a></h3>
-                <p class="news-summary">推理能力较前代提升40%，支持100万token超长上下文。新增"深度思考"模式，可处理复杂数学推导和代码架构设计。企业版已上线，API价格降低25%。</p>
-                <div class="news-meta">
-                    <span class="news-source">Anthropic</span>
-                    <span>·</span>
-                    <span>2026-03-18</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://twitter.com/" target="_blank">Twitter热议：GPT-5发布后，Claude用户何去何从？</a></h3>
+                        <p class="news-summary">45.2k互动量。大量用户对比后，发现Claude在长文本理解和代码审查上仍保持优势。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Twitter/X</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://news.ycombinator.com/" target="_blank">Hacker News热议：AI生成内容的版权归属争议</a></h3>
+                        <p class="news-summary">892条评论深度讨论。法律专家与开发者就AI训练数据的合法性、生成内容的可版权性激烈交锋。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Hacker News</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://news.ycombinator.com/" target="_blank">YC校友群讨论：2026年AI创业的最佳赛道是什么？</a></h3>
+                        <p class="news-summary">垂直领域AI Agent、AI基础设施工具、企业知识管理成为三大热门方向。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Hacker News</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://rjcorwin.github.io/cook/" target="_blank">Cook: A simple CLI for orchestrating Claude Code</a></h3>
+                        <p class="news-summary">23 points · 4 comments</p>
+                        <div class="news-meta">
+                            <span class="news-source">Hacker News</span>
+                            <span>·</span>
+                            <span></span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.quantamagazine.org/the-math-that-explains-why-bell-curves-are-everywhere-20260316/" target="_blank">The math that explains why bell curves are everywhere</a></h3>
+                        <p class="news-summary">70 points · 31 comments</p>
+                        <div class="news-meta">
+                            <span class="news-source">Hacker News</span>
+                            <span>·</span>
+                            <span></span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://mlbenchmarks.org/00-preface.html" target="_blank">Book: The Emerging Science of Machine Learning Benchmarks</a></h3>
+                        <p class="news-summary">97 points · 4 comments</p>
+                        <div class="news-meta">
+                            <span class="news-source">Hacker News</span>
+                            <span>·</span>
+                            <span></span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://runwayml.com/" target="_blank">Runway Gen-4发布：影视级AI视频生成，单镜头可达60秒</a></h3>
-                <p class="news-summary">支持生成60秒连续镜头，角色一致性显著提升。新增"导演模式"，可精确控制摄像机运动和场景转换。已开放API，价格$0.05/秒。</p>
-                <div class="news-meta">
-                    <span class="news-source">Runway</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+            <section class="section" id="global-domestic">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">■</span>
+                        <span class="section-title">国内动态</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.midjourney.com/" target="_blank">Midjourney V7引入"Character Lock"：角色一致性革命性突破</a></h3>
-                <p class="news-summary">可在不同场景、角度、风格中保持同一角色的面部特征和服装细节。支持"风格混合"，将任意两种艺术风格无缝融合。</p>
-                <div class="news-meta">
-                    <span class="news-source">Midjourney</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://tongyi.aliyun.com/" target="_blank">阿里通义千问2.5发布：开源模型中文能力超越GPT-4</a></h3>
+                        <p class="news-summary">Qwen2.5-72B在中文理解、数学推理、代码生成等方面超越GPT-4。阿里同时开源了0.5B到110B全系列模型。</p>
+                        <div class="news-meta">
+                            <span class="news-source">阿里云</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://xinghuo.xfyun.cn/" target="_blank">科大讯飞发布星火认知大模型V4.0：教育场景深度优化</a></h3>
+                        <p class="news-summary">新增"AI老师"功能，可模拟真人教师进行个性化辅导，已在全国5000+学校试点。</p>
+                        <div class="news-meta">
+                            <span class="news-source">科大讯飞</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.sensetime.com/" target="_blank">商汤发布"日日新"5.0：多模态能力全面升级</a></h3>
+                        <p class="news-summary">支持文本、图像、视频、3D模型的统一理解和生成。在自动驾驶场景测试中，复杂路况识别准确率达到99.2%。</p>
+                        <div class="news-meta">
+                            <span class="news-source">商汤科技</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.beijing.gov.cn/" target="_blank">北京、上海相继出台AI产业扶持政策，最高奖励1亿元</a></h3>
+                        <p class="news-summary">两地政策聚焦算力补贴、数据开放、人才引进。北京重点支持大模型研发，上海侧重AI芯片和自动驾驶应用。</p>
+                        <div class="news-meta">
+                            <span class="news-source">政府公告</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.doubao.com/" target="_blank">字节跳动豆包大模型降价80%，引发国内大模型价格战</a></h3>
+                        <p class="news-summary">豆包Pro模型API价格降至0.0008元/千token。文心一言、通义千问随即跟进降价，行业进入"百模大战"新阶段。</p>
+                        <div class="news-meta">
+                            <span class="news-source">字节跳动</span>
+                            <span>·</span>
+                            <span>2026-03-14</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
+        </div>
+        
+        <!-- AI设计专题 -->
+        <div class="topic-content" id="topic-design">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://cursor.sh/" target="_blank">Cursor AI IDE 1.0正式发布，集成Claude 4和GPT-5</a></h3>
-                <p class="news-summary">新增"Composer"功能，可根据自然语言描述直接生成完整项目。支持30+编程语言，月活开发者突破200万。</p>
-                <div class="news-meta">
-                    <span class="news-source">Cursor</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
+            <section class="section" id="design-new_products">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">🎨</span>
+                        <span class="section-title">新品动态</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.perplexity.ai/" target="_blank">Perplexity推出Sonar Pro：面向企业的深度研究AI</a></h3>
-                <p class="news-summary">专为金融、咨询、法律行业设计，支持多源信息交叉验证、生成带引用链接的研究报告。企业版起价$200/月。</p>
-                <div class="news-meta">
-                    <span class="news-source">Perplexity</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.midjourney.com/" target="_blank">Midjourney V7发布："Character Lock"实现角色一致性突破</a></h3>
+                        <p class="news-summary">可在不同场景、角度、风格中保持同一角色的面部特征和服装细节。设计师反馈：插画、漫画创作效率提升10倍。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Midjourney</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.adobe.com/" target="_blank">Adobe Firefly 4企业版：商用安全图像生成</a></h3>
+                        <p class="news-summary">主打"企业级版权保障"，所有训练数据均获授权。新增"品牌一致性"功能，财富500强中200+企业已采购。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Adobe</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://runwayml.com/" target="_blank">Runway Gen-4：影视级AI视频生成，单镜头60秒</a></h3>
+                        <p class="news-summary">支持生成60秒连续镜头，角色一致性显著提升。独立电影制作人已开始使用Gen-4制作短片。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Runway</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.krea.ai/" target="_blank">Krea.ai实时绘画2.0：草图秒变精美插画</a></h3>
+                        <p class="news-summary">支持实时风格迁移，新增"材质理解"功能。概念设计师反馈：从草图到成品时间从2天缩短至2小时。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Krea.ai</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://stability.ai/" target="_blank">Stability AI发布Stable Design 3D：文本直接生成3D模型</a></h3>
+                        <p class="news-summary">输入文字描述即可生成可直接用于游戏引擎的3D模型，支持PBR材质。游戏开发者反馈：建模时间从1周缩短至1小时。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Stability AI</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://yiyan.baidu.com/" target="_blank">百度文心一言5.0发布：中文理解能力对标GPT-5</a></h3>
-                <p class="news-summary">在中文理解、古诗词生成、行业知识方面超越GPT-5。新增"文心代码"功能，支持50+编程语言，代码生成准确率提升60%。</p>
-                <div class="news-meta">
-                    <span class="news-source">百度</span>
-                    <span>·</span>
-                    <span>2026-03-15</span>
+            <section class="section" id="design-cases">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">✨</span>
+                        <span class="section-title">案例赏析</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
-</section>
+                <div class="section-content">
 
-        <section class="section">
-            <div class="section-header">
-                <span class="section-icon">■</span>
-                <h2 class="section-title purple">技术实践</h2>
-            </div>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.nike.com/" target="_blank">案例：Nike用AI生成的"未来运动员"系列广告斩获戛纳金狮</a></h3>
+                        <p class="news-summary">完全使用Midjourney+Runway生成，从概念到成片仅用时3周，成本降低90%。评委评价："AI不是替代创意，而是放大了创意的可能性"。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Nike / 戛纳创意节</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://dev.to/" target="_blank">FoodLens：用GPT-4o视觉模型与SAM构建实时营养成分分析引擎</a></h3>
-                <p class="news-summary">结合GPT-4o视觉能力和Meta SAM图像分割，让手机直接"看"食物并实时分析营养成分，彻底告别手动输入的痛苦体验。</p>
-                <div class="news-meta">
-                    <span class="news-source">Dev.to</span>
-                    <span>·</span>
-                    <span>2026-03-18</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.behance.net/" target="_blank">案例：东京奥运会视觉设计中的AI辅助应用</a></h3>
+                        <p class="news-summary">设计团队使用AI生成3000+配色方案，最终选定"靛蓝+金"组合。动态图形部分使用AI辅助生成，效率提升5倍。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Behance精选</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://dribbble.com/" target="_blank">案例：独立设计师用AI工具月收入突破10万美元</a></h3>
+                        <p class="news-summary">设计师Sarah Chen分享workflow：Midjourney概念图 → Figma AI细化 → Runway动态化。单个品牌项目从2周缩短至3天。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Dribbble</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.artstation.com/" target="_blank">案例：AI生成的《梵高风格上海》系列登上ArtStation首页</a></h3>
+                        <p class="news-summary">艺术家使用Stable Diffusion+ControlNet，将上海地标建筑转换为梵高画风。作品引发关于"AI艺术"的热烈讨论。</p>
+                        <div class="news-meta">
+                            <span class="news-source">ArtStation</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.pentagram.com/" target="_blank">案例：Pentagram用AI重新设计Spotify品牌系统</a></h3>
+                        <p class="news-summary">顶级设计事务所Pentagram首次公开AI辅助设计流程：使用AI生成500+图标变体，最终人工精选出50个。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Pentagram</span>
+                            <span>·</span>
+                            <span>2026-03-14</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://dev.to/" target="_blank">Claude Code在React开发中的模式分析：做对了什么，翻车在哪</a></h3>
-                <p class="news-summary">Claude Code在组件拆分、Hook抽象等方面表现可靠，但作者总结了三个一致性失误点——这些坑在实际项目中会反复踩到。</p>
-                <div class="news-meta">
-                    <span class="news-source">Dev.to</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+            <section class="section" id="design-tool_innovation">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">🛠️</span>
+                        <span class="section-title">工具创新</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.infoq.com/" target="_blank">QCon London 2026：如何为生产级AI系统构建可靠的RAG检索能力</a></h3>
-                <p class="news-summary">荷兰合作银行AI技术负责人分享服务300+内部用户、索引超1万份文档的RAG系统经验：大多数故障根源在于索引质量，而非模型本身。</p>
-                <div class="news-meta">
-                    <span class="news-source">InfoQ</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.figma.com/" target="_blank">Figma AI 2.0：文字描述直接生成UI界面</a></h3>
+                        <p class="news-summary">新增"Design Assistant"功能，可根据自然语言描述自动生成完整UI界面，支持响应式布局。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Figma</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.canva.com/" target="_blank">Canva Magic Design：AI一键生成完整品牌方案</a></h3>
+                        <p class="news-summary">输入公司介绍，AI自动生成Logo、名片、PPT模板、社交媒体素材等全套品牌视觉。非设计师用户10分钟获得专业方案。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Canva</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.sketch.com/" target="_blank">Sketch AI插件生态爆发：20款必备工具清单</a></h3>
+                        <p class="news-summary">推荐：Magician（文本转图标）、QoQo（用户研究）、Ando（图像生成）、Diagram（UI生成）。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Sketch</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.blender.org/" target="_blank">Blender新增AI纹理生成器：文本描述生成PBR材质</a></h3>
+                        <p class="news-summary">开源3D软件Blender内置AI纹理生成，支持4K分辨率PBR材质。材质制作时间从半天缩短至5分钟。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Blender</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://www.framer.com/" target="_blank">Framer AI：网站设计到发布只需一句话</a></h3>
+                        <p class="news-summary">"帮我做一个SaaS产品官网，科技风格，深蓝色调"——Framer AI自动生成完整网站，包括文案、图片、交互动效。</p>
+                        <div class="news-meta">
+                            <span class="news-source">Framer</span>
+                            <span>·</span>
+                            <span>2026-03-14</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://dev.to/" target="_blank">10个开源仓库揭示AI时代的"开发漂移"现象</a></h3>
-                <p class="news-summary">谷歌DORA研究发现悖论：AI代码用得越多，某些开发质量指标反而下滑。对10个开源仓库的分析揭示了AI时代真实存在的开发漂移问题。</p>
-                <div class="news-meta">
-                    <span class="news-source">Dev.to</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
+            <section class="section" id="design-openclaw_design">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-header-left">
+                        <span class="section-icon">🤖</span>
+                        <span class="section-title">OpenClaw</span>
+                        <span class="section-count">5条</span>
+                    </div>
+                    <span class="toggle-btn">▼</span>
                 </div>
-            </article>
+                <div class="section-content">
 
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://towardsdatascience.com/" target="_blank">自托管你的第一个大语言模型：从零开始的完整指南</a></h3>
-                <p class="news-summary">覆盖隐私保护、成本控制和个性化定制三大核心需求，手把手教你如何本地部署和运行LLM，不依赖任何云服务。</p>
-                <div class="news-meta">
-                    <span class="news-source">Towards Data Science</span>
-                    <span>·</span>
-                    <span>2026-03-15</span>
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">OpenClaw如何改变设计师的工作流：从创意到实现的无缝衔接</a></h3>
+                        <p class="news-summary">设计师通过与OpenClaw对话完成从需求分析、草图生成、高保真设计到前端代码的全流程。案例：一个品牌官网设计从需求到上线仅用6小时。</p>
+                        <div class="news-meta">
+                            <span class="news-source">OpenClaw案例</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">设计师实测：用OpenClaw生成设计日报的效率提升报告</a></h3>
+                        <p class="news-summary">设计师记录一周工作流对比：传统方式平均每日收集整理资讯需3小时，使用OpenClaw后降至30分钟。</p>
+                        <div class="news-meta">
+                            <span class="news-source">设计师实测</span>
+                            <span>·</span>
+                            <span>2026-03-17</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">OpenClaw + Figma：AI驱动设计的最佳实践</a></h3>
+                        <p class="news-summary">工作流：OpenClaw生成设计概念和文案 → Figma AI细化视觉 → OpenClaw检查设计一致性 → 自动生成设计规范文档。</p>
+                        <div class="news-meta">
+                            <span class="news-source">OpenClaw教程</span>
+                            <span>·</span>
+                            <span>2026-03-16</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">设计团队如何用OpenClaw管理品牌资产</a></h3>
+                        <p class="news-summary">团队将品牌规范、设计系统、历史项目存入OpenClaw知识库。新成员通过对话即可了解品牌规则，团队沟通效率提升60%。</p>
+                        <div class="news-meta">
+                            <span class="news-source">OpenClaw企业版</span>
+                            <span>·</span>
+                            <span>2026-03-15</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">OpenClaw设计助手：从用户研究到视觉设计的AI伙伴</a></h3>
+                        <p class="news-summary">功能包括：分析用户访谈记录生成洞察、根据洞察生成设计方案建议、自动创建用户画像和旅程图、生成可用性测试脚本。</p>
+                        <div class="news-meta">
+                            <span class="news-source">OpenClaw功能发布</span>
+                            <span>·</span>
+                            <span>2026-03-14</span>
+                        </div>
+                    </article>
                 </div>
-            </article>
-</section>
-
-        <section class="section">
-            <div class="section-header">
-                <span class="section-icon">■</span>
-                <h2 class="section-title red">海外前沿讨论</h2>
-            </div>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://rjcorwin.github.io/cook/" target="_blank">Cook: A simple CLI for orchestrating Claude Code</a></h3>
-                <p class="news-summary">14 points · 2 comments</p>
-                <div class="news-meta">
-                    <span class="news-source">Hacker News</span>
-                    <span>·</span>
-                    <span></span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.quantamagazine.org/the-math-that-explains-why-bell-curves-are-everywhere-20260316/" target="_blank">The math that explains why bell curves are everywhere</a></h3>
-                <p class="news-summary">68 points · 30 comments</p>
-                <div class="news-meta">
-                    <span class="news-source">Hacker News</span>
-                    <span>·</span>
-                    <span></span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://github.com/alainnothere/llm-circuit-finder" target="_blank">Show HN: Duplicate 3 layers in a 24B LLM, logical deduction .22→.76. No training</a></h3>
-                <p class="news-summary">84 points · 26 comments</p>
-                <div class="news-meta">
-                    <span class="news-source">Hacker News</span>
-                    <span>·</span>
-                    <span></span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://mlbenchmarks.org/00-preface.html" target="_blank">Book: The Emerging Science of Machine Learning Benchmarks</a></h3>
-                <p class="news-summary">94 points · 4 comments</p>
-                <div class="news-meta">
-                    <span class="news-source">Hacker News</span>
-                    <span>·</span>
-                    <span></span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.reddit.com/r/programming/" target="_blank">Reddit r/programming热议：AI会取代程序员吗？</a></h3>
-                <p class="news-summary">12.3k赞讨论。观点两极分化：有人认为AI只是工具，有人担忧初级程序员岗位将在3年内消失。多数意见认为"会用AI的程序员取代不会用的"。</p>
-                <div class="news-meta">
-                    <span class="news-source">Reddit</span>
-                    <span>·</span>
-                    <span>2026-03-18</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://twitter.com/" target="_blank">Twitter热议：GPT-5发布后，Claude用户何去何从？</a></h3>
-                <p class="news-summary">45.2k互动量。大量用户对比两者性能后，发现Claude在长文本理解和代码审查上仍保持优势，部分用户表示"不会迁移"。</p>
-                <div class="news-meta">
-                    <span class="news-source">Twitter/X</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://news.ycombinator.com/" target="_blank">Hacker News热议：AI生成内容的版权归属争议</a></h3>
-                <p class="news-summary">892条评论深度讨论。法律专家与开发者就AI训练数据的合法性、生成内容的可版权性激烈交锋。美国版权局最新指引成为焦点。</p>
-                <div class="news-meta">
-                    <span class="news-source">Hacker News</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://news.ycombinator.com/" target="_blank">YC校友群讨论：2026年AI创业的最佳赛道是什么？</a></h3>
-                <p class="news-summary">垂直领域AI Agent、AI基础设施工具、企业知识管理成为三大热门方向。共识：避免与OpenAI直接竞争，寻找细分场景。</p>
-                <div class="news-meta">
-                    <span class="news-source">Hacker News</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
-                </div>
-            </article>
-</section>
-
-        <section class="section">
-            <div class="section-header">
-                <span class="section-icon">■</span>
-                <h2 class="section-title cyan">国内行业动态</h2>
-            </div>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://tongyi.aliyun.com/" target="_blank">阿里通义千问2.5发布：开源模型中文能力超越GPT-4</a></h3>
-                <p class="news-summary">Qwen2.5-72B在中文理解、数学推理、代码生成等方面超越GPT-4。阿里同时开源了0.5B到110B全系列模型，可商用。</p>
-                <div class="news-meta">
-                    <span class="news-source">阿里云</span>
-                    <span>·</span>
-                    <span>2026-03-18</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://xinghuo.xfyun.cn/" target="_blank">科大讯飞发布星火认知大模型V4.0：教育场景深度优化</a></h3>
-                <p class="news-summary">在教育、医疗、司法三大垂直领域准确率提升显著。新增"AI老师"功能，可模拟真人教师进行个性化辅导，已在全国5000+学校试点。</p>
-                <div class="news-meta">
-                    <span class="news-source">科大讯飞</span>
-                    <span>·</span>
-                    <span>2026-03-17</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.sensetime.com/" target="_blank">商汤发布"日日新"5.0：多模态能力全面升级</a></h3>
-                <p class="news-summary">支持文本、图像、视频、3D模型的统一理解和生成。在自动驾驶场景测试中，复杂路况识别准确率达到99.2%。</p>
-                <div class="news-meta">
-                    <span class="news-source">商汤科技</span>
-                    <span>·</span>
-                    <span>2026-03-16</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.beijing.gov.cn/" target="_blank">北京、上海相继出台AI产业扶持政策，最高奖励1亿元</a></h3>
-                <p class="news-summary">两地政策聚焦算力补贴、数据开放、人才引进。北京重点支持大模型研发，上海侧重AI芯片和自动驾驶应用。</p>
-                <div class="news-meta">
-                    <span class="news-source">政府公告</span>
-                    <span>·</span>
-                    <span>2026-03-15</span>
-                </div>
-            </article>
-
-            <article class="news-item">
-                <h3 class="news-title"><a href="https://www.doubao.com/" target="_blank">字节跳动豆包大模型降价80%，引发国内大模型价格战</a></h3>
-                <p class="news-summary">豆包Pro模型API价格降至0.0008元/千token，较年初下降80%。文心一言、通义千问随即跟进降价，行业进入"百模大战"新阶段。</p>
-                <div class="news-meta">
-                    <span class="news-source">字节跳动</span>
-                    <span>·</span>
-                    <span>2026-03-14</span>
-                </div>
-            </article>
-</section>
-
+            </section>
+        </div>
     </div>
     
     <footer>
-        <p>全球AI资讯 · 2026年03月19日</p>
-        <p style="margin-top:8px;">数据来源: TechCrunch · MIT Tech Review · Nature · arXiv · Hacker News · 国内科技媒体</p>
+        <p>AI日报 · 2026年03月19日</p>
+        <p style="margin-top:8px;">全球AI资讯 · AI设计专题 · 每日更新</p>
     </footer>
+    
+    <script>
+        // 切换专题
+        function switchTopic(topic) {
+            // 更新按钮状态
+            document.querySelectorAll('.topic-btn').forEach(btn => {
+                btn.classList.remove('active', 'design-active');
+                if (btn.dataset.topic === topic) {
+                    btn.classList.add('active');
+                    if (topic === 'design') btn.classList.add('design-active');
+                }
+            });
+            
+            // 切换模块导航
+            document.querySelectorAll('.module-nav').forEach(nav => nav.classList.remove('visible'));
+            document.getElementById('module-nav-' + topic).classList.add('visible');
+            
+            // 切换内容
+            document.querySelectorAll('.topic-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('topic-' + topic).classList.add('active');
+            
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // 滚动到模块
+        function scrollToModule(moduleId) {
+            const element = document.getElementById(moduleId);
+            if (element) {
+                // 确保内容展开
+                const content = element.querySelector('.section-content');
+                const toggle = element.querySelector('.toggle-btn');
+                if (content.classList.contains('collapsed')) {
+                    content.classList.remove('collapsed');
+                    toggle.classList.remove('collapsed');
+                    toggle.textContent = '▼';
+                }
+                
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // 展开/收起模块
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const content = section.querySelector('.section-content');
+            const toggle = header.querySelector('.toggle-btn');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                toggle.classList.remove('collapsed');
+                toggle.textContent = '▼';
+            } else {
+                content.classList.add('collapsed');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+            }
+        }
+    </script>
 </body>
 </html>
