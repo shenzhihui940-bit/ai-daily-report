@@ -6,149 +6,162 @@
     <title>AI日报 | 全球AI资讯 & AI设计专题</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #fafafa; --bg-card: #fff; --text: #1a1a1a; --text-sec: #666; --text-ter: #999; --border: #e8e8e8; --accent: #2563eb; }
+        :root { --bg: #fafafa; --bg-card: #fff; --text: #1a1a1a; --text-sec: #666; --text-ter: #999; --border: #e8e8e8; --accent: #2563eb; --sidebar: #f5f5f5; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
         
-        /* Header */
-        header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 30px 20px; text-align: center; position: sticky; top: 0; z-index: 100; }
-        .brand { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
-        h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
-        .subtitle { color: var(--text-sec); font-size: 14px; margin-bottom: 20px; }
-        
-        /* 专题导航 */
-        .topic-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .topic-btn { 
-            display: flex; align-items: center; gap: 8px;
-            padding: 12px 24px; border: 2px solid var(--border); border-radius: 8px;
-            background: var(--bg-card); color: var(--text-sec); font-size: 15px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s;
+        /* 顶部标题栏 - 精简 */
+        .top-header { 
+            background: var(--bg-card); border-bottom: 1px solid var(--border); 
+            padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; height: 56px;
         }
-        .topic-btn:hover { border-color: var(--accent); }
+        .top-header-left { display: flex; align-items: center; gap: 12px; }
+        .top-header .brand { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 1px; }
+        .top-header h1 { font-size: 18px; font-weight: 700; }
+        .top-header .date { font-size: 12px; color: var(--text-sec); background: var(--sidebar); padding: 4px 12px; border-radius: 12px; }
+        
+        /* 主体布局 */
+        .main-layout { display: flex; min-height: calc(100vh - 56px); }
+        
+        /* 左侧一级导航 - 横向 */
+        .left-nav { 
+            width: 200px; background: var(--bg-card); border-right: 1px solid var(--border);
+            padding: 20px 0; position: fixed; left: 0; top: 56px; bottom: 0; overflow-y: auto;
+        }
+        .left-nav-title { 
+            font-size: 11px; font-weight: 600; color: var(--text-ter); 
+            text-transform: uppercase; letter-spacing: 1px; padding: 0 16px 12px; 
+        }
+        .topic-btn { 
+            display: flex; align-items: center; gap: 10px;
+            width: calc(100% - 20px); margin: 0 10px 8px; padding: 12px 16px;
+            border: 1px solid transparent; border-radius: 8px;
+            background: transparent; color: var(--text-sec); font-size: 14px;
+            cursor: pointer; transition: all 0.2s; text-align: left;
+        }
+        .topic-btn:hover { background: var(--bg); }
         .topic-btn.active { 
             background: var(--accent); color: #fff; border-color: var(--accent);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
-        .topic-btn.design-active { background: #db2777; border-color: #db2777; box-shadow: 0 4px 12px rgba(219, 39, 119, 0.3); }
+        .topic-btn.design.active { background: #db2777; border-color: #db2777; }
+        .topic-btn .icon { font-size: 18px; }
         
-        /* 模块导航 */
-        .module-nav { 
-            display: none; justify-content: center; flex-wrap: wrap; gap: 8px;
-            padding: 15px; background: rgba(37, 99, 235, 0.05); border-radius: 8px; margin: 0 20px 20px;
+        /* 右侧二级导航 - 纵向 */
+        .right-sidebar {
+            width: 160px; background: var(--sidebar); border-left: 1px solid var(--border);
+            padding: 20px 0; position: fixed; right: 0; top: 56px; bottom: 0; overflow-y: auto;
         }
-        .module-nav.design { background: rgba(219, 39, 119, 0.05); }
-        .module-nav.visible { display: flex; }
+        .right-sidebar-title {
+            font-size: 11px; font-weight: 600; color: var(--text-ter);
+            text-transform: uppercase; letter-spacing: 1px; padding: 0 16px 12px;
+        }
         .module-btn {
-            padding: 8px 16px; border: 1px solid var(--border); border-radius: 20px;
-            background: var(--bg-card); color: var(--text-sec); font-size: 13px;
+            display: block; width: calc(100% - 20px); margin: 0 10px 6px; padding: 10px 14px;
+            border: none; border-radius: 6px; background: transparent;
+            color: var(--text-sec); font-size: 13px; text-align: left;
             cursor: pointer; transition: all 0.2s;
         }
-        .module-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .module-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-        .module-btn.design:hover { border-color: #db2777; color: #db2777; }
-        .module-btn.design.active { background: #db2777; border-color: #db2777; }
+        .module-btn:hover { background: var(--bg-card); color: var(--text); }
+        .module-btn.active { 
+            background: var(--accent); color: #fff;
+        }
+        .module-btn.design.active { background: #db2777; }
         
-        /* Container */
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        /* 内容区域 */
+        .content-area {
+            flex: 1; margin-left: 200px; margin-right: 160px; padding: 24px;
+            max-width: calc(100% - 360px);
+        }
         
-        /* Topic Content */
+        /* 专题内容 */
         .topic-content { display: none; }
         .topic-content.active { display: block; }
         
-        /* Section */
-        .section { margin-bottom: 30px; scroll-margin-top: 200px; }
-        .section-header { 
+        /* 模块区块 */
+        .section { margin-bottom: 24px; scroll-margin-top: 80px; }
+        .section-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 15px 20px; background: var(--bg-card); border: 1px solid var(--border);
+            padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 8px; cursor: pointer; transition: all 0.2s;
         }
         .section-header:hover { border-color: var(--accent); }
-        .section-header-left { display: flex; align-items: center; gap: 12px; }
-        .section-icon { font-size: 20px; }
-        .section-title { font-size: 16px; font-weight: 600; }
-        .section-count { 
-            font-size: 12px; color: var(--text-ter); background: var(--bg);
-            padding: 2px 10px; border-radius: 12px;
+        .section-header-left { display: flex; align-items: center; gap: 10px; }
+        .section-icon { font-size: 16px; }
+        .section-title { font-size: 15px; font-weight: 600; }
+        .section-count {
+            font-size: 11px; color: var(--text-ter); background: var(--bg);
+            padding: 2px 8px; border-radius: 10px;
         }
-        .toggle-btn { 
-            font-size: 18px; color: var(--text-ter); width: 30px; height: 30px;
+        .toggle-btn {
+            font-size: 14px; color: var(--text-ter); width: 24px; height: 24px;
             display: flex; align-items: center; justify-content: center;
-            border-radius: 6px; transition: all 0.2s;
+            border-radius: 4px; transition: all 0.2s;
         }
         .toggle-btn:hover { background: var(--bg); }
         .toggle-btn.collapsed { transform: rotate(-90deg); }
         
-        .section-content { 
-            padding: 15px 0; max-height: 20000px; overflow: hidden;
+        .section-content {
+            padding: 12px 0; max-height: 50000px; overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
         .section-content.collapsed { max-height: 0; padding: 0; }
         
-        /* News Item */
-        .news-item { 
+        /* 新闻条目 */
+        .news-item {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 8px; padding: 18px 20px; margin-bottom: 12px;
+            border-radius: 8px; padding: 16px 18px; margin-bottom: 10px;
             transition: all 0.2s;
         }
-        .news-item:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .news-title { font-size: 15px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
+        .news-item:hover { border-color: var(--accent); box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .news-title { font-size: 14px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
         .news-title a { color: var(--text); text-decoration: none; }
         .news-title a:hover { color: var(--accent); }
-        .news-summary { color: var(--text-sec); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
-        .news-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-ter); }
+        .news-summary { color: var(--text-sec); font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+        .news-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-ter); }
         .news-source { font-weight: 500; color: var(--text-sec); }
         
-        /* Footer */
-        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-ter); font-size: 13px; margin-top: 40px; }
+        /* 隐藏未激活的导航 */
+        .module-nav-content { display: none; }
+        .module-nav-content.active { display: block; }
         
-        /* Responsive */
-        @media (max-width: 640px) {
-            h1 { font-size: 22px; }
-            .topic-btn { padding: 10px 16px; font-size: 14px; }
-            .module-nav { margin: 0 10px 15px; }
-            .container { padding: 15px; }
-            .section-header { padding: 12px 15px; }
+        /* Footer */
+        footer { text-align: center; padding: 30px 20px; border-top: 1px solid var(--border); color: var(--text-ter); font-size: 12px; margin-top: 40px; }
+        
+        /* 响应式 - 移动端隐藏侧边栏 */
+        @media (max-width: 900px) {
+            .left-nav, .right-sidebar { display: none; }
+            .content-area { margin: 0; max-width: 100%; padding: 16px; }
+            .top-header { padding: 10px 16px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="brand">AI DAILY REPORT</div>
-        <h1>📰 AI日报</h1>
-        <p class="subtitle">全球AI资讯 · AI设计专题 | 2026年03月19日</p>
-        
-        <!-- 专题导航 -->
-        <div class="topic-nav">
+    <!-- 顶部标题栏 -->
+    <div class="top-header">
+        <div class="top-header-left">
+            <span class="brand">AI DAILY</span>
+            <h1>📰 AI日报</h1>
+        </div>
+        <span class="date">2026年03月19日</span>
+    </div>
+    
+    <div class="main-layout">
+        <!-- 左侧一级导航 -->
+        <nav class="left-nav">
+            <div class="left-nav-title">专题切换</div>
             <button class="topic-btn active" data-topic="global" onclick="switchTopic('global')">
-                <span>🌐</span>
+                <span class="icon">🌐</span>
                 <span>全球AI资讯</span>
             </button>
-            <button class="topic-btn" data-topic="design" onclick="switchTopic('design')">
-                <span>🎨</span>
+            <button class="topic-btn design" data-topic="design" onclick="switchTopic('design')">
+                <span class="icon">🎨</span>
                 <span>AI设计专题</span>
             </button>
-        </div>
+        </nav>
         
-        <!-- 模块导航 - 全球AI -->
-        <div class="module-nav visible" id="module-nav-global">
-            <button class="module-btn" onclick="scrollToModule('global-industry')">行业与商业</button>
-            <button class="module-btn" onclick="scrollToModule('global-research')">学术研究</button>
-            <button class="module-btn" onclick="scrollToModule('global-products')">新品动态</button>
-            <button class="module-btn" onclick="scrollToModule('global-tech')">技术实践</button>
-            <button class="module-btn" onclick="scrollToModule('global-overseas')">海外讨论</button>
-            <button class="module-btn" onclick="scrollToModule('global-domestic')">国内动态</button>
-        </div>
-        
-        <!-- 模块导航 - AI设计 -->
-        <div class="module-nav design" id="module-nav-design">
-            <button class="module-btn design" onclick="scrollToModule('design-new_products')">新品动态</button>
-            <button class="module-btn design" onclick="scrollToModule('design-cases')">案例赏析</button>
-            <button class="module-btn design" onclick="scrollToModule('design-tool_innovation')">工具创新</button>
-            <button class="module-btn design" onclick="scrollToModule('design-openclaw_design')">OpenClaw</button>
-        </div>
-    </header>
-    
-    <div class="container">
+        <!-- 内容区域 -->
+        <main class="content-area">
         <!-- 全球AI资讯 -->
         <div class="topic-content active" id="topic-global">
 
@@ -273,7 +286,7 @@
                     <div class="section-header-left">
                         <span class="section-icon">■</span>
                         <span class="section-title">新品动态</span>
-                        <span class="section-count">6条</span>
+                        <span class="section-count">10条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
                 </div>
@@ -336,6 +349,46 @@
                             <span class="news-source">百度</span>
                             <span>·</span>
                             <span>2026-03-15</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://youtube.com/watch?v=TYYwv92PfwI" target="_blank">Inside GTC 2026: Jensen Huang’s Vision for the Future of AI and Computing</a></h3>
+                        <p class="news-summary">Monday, March 16 | 7 p.m. - 9 p.m. CET| NVIDIA GTC 2026 Keynote He's back. The leather jacket. The vision. The energy only ...</p>
+                        <div class="news-meta">
+                            <span class="news-source">YouTube · Maple Leaf ESL</span>
+                            <span>·</span>
+                            <span>2026-03-18</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://youtube.com/watch?v=zt0JA5rxdfM" target="_blank">AI Trends 2026: Quantum, Agentic AI &amp; Smarter Automation</a></h3>
+                        <p class="news-summary">Ready to become a certified watsonx AI Assistant Engineer v1 - Professional? Register now and use code IBMTechYT20 for 20% ...</p>
+                        <div class="news-meta">
+                            <span class="news-source">YouTube · IBM Technology</span>
+                            <span>·</span>
+                            <span>2025-12-22</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://youtube.com/watch?v=3w093nkLqCg" target="_blank">What can we expect from AI in 2026? | The Current</a></h3>
+                        <p class="news-summary">Artificial Intelligence exploded in 2025. This year saw big promises, real-world disruption and growing anxiety about jobs, bubbles ...</p>
+                        <div class="news-meta">
+                            <span class="news-source">YouTube · CBC News</span>
+                            <span>·</span>
+                            <span>2025-12-31</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://youtube.com/watch?v=OpAZvUSeNaM" target="_blank">How AI could impact your life in 2026</a></h3>
+                        <p class="news-summary">Price Waterhouse Cooper's Matt Wood talks about trends for artificial intelligence and what you can do to embrace the technology.</p>
+                        <div class="news-meta">
+                            <span class="news-source">YouTube · ABC News</span>
+                            <span>·</span>
+                            <span>2025-12-30</span>
                         </div>
                     </article>
                 </div>
@@ -403,7 +456,7 @@
                     </article>
 
                     <article class="news-item">
-                        <h3 class="news-title"><a href="https://github.com/hx88xn/airsial-ticketing-service" target="_blank">hx88xn/airsial-ticketing-service</a></h3>
+                        <h3 class="news-title"><a href="https://github.com/igor-trindade/Lyssandra-AI" target="_blank">igor-trindade/Lyssandra-AI</a></h3>
                         <p class="news-summary">No description | ⭐ 0 stars</p>
                         <div class="news-meta">
                             <span class="news-source">GitHub</span>
@@ -413,7 +466,17 @@
                     </article>
 
                     <article class="news-item">
-                        <h3 class="news-title"><a href="https://github.com/hl759/quotex-ai-free" target="_blank">hl759/quotex-ai-free</a></h3>
+                        <h3 class="news-title"><a href="https://github.com/Prajjwals110/Daily-Report-Conversion-API" target="_blank">Prajjwals110/Daily-Report-Conversion-API</a></h3>
+                        <p class="news-summary">A FastAPI backend service that receives unstructured "Daily Site Reports" in text format, utilizes Groq's Llama-3 AI mod | ⭐ 0 stars</p>
+                        <div class="news-meta">
+                            <span class="news-source">GitHub</span>
+                            <span>·</span>
+                            <span>2026-03-19</span>
+                        </div>
+                    </article>
+
+                    <article class="news-item">
+                        <h3 class="news-title"><a href="https://github.com/jonnealon/ice-air-operations-monitoring" target="_blank">jonnealon/ice-air-operations-monitoring</a></h3>
                         <p class="news-summary">No description | ⭐ 0 stars</p>
                         <div class="news-meta">
                             <span class="news-source">GitHub</span>
@@ -423,8 +486,8 @@
                     </article>
 
                     <article class="news-item">
-                        <h3 class="news-title"><a href="https://github.com/perditioinc/reporium-dataset" target="_blank">perditioinc/reporium-dataset</a></h3>
-                        <p class="news-summary">Public dataset mirror for reporium.com — nightly-updated AI dev tool stats from reporium-db. | ⭐ 1 stars</p>
+                        <h3 class="news-title"><a href="https://github.com/Samueldagostino/AI-Trading-Bot" target="_blank">Samueldagostino/AI-Trading-Bot</a></h3>
+                        <p class="news-summary">Trading Bot For NQ Futures | ⭐ 0 stars</p>
                         <div class="news-meta">
                             <span class="news-source">GitHub</span>
                             <span>·</span>
@@ -433,18 +496,8 @@
                     </article>
 
                     <article class="news-item">
-                        <h3 class="news-title"><a href="https://github.com/aote6/zhongqu" target="_blank">aote6/zhongqu</a></h3>
-                        <p class="news-summary">人-AI协调器：让AI记住你们之间的事 · A human-AI coordinator that helps AI remember what you've built together | ⭐ 1 stars</p>
-                        <div class="news-meta">
-                            <span class="news-source">GitHub</span>
-                            <span>·</span>
-                            <span>2026-03-19</span>
-                        </div>
-                    </article>
-
-                    <article class="news-item">
-                        <h3 class="news-title"><a href="https://github.com/Meet-sun-2023/claude-skills" target="_blank">Meet-sun-2023/claude-skills</a></h3>
-                        <p class="news-summary">claude skills | ⭐ 2 stars</p>
+                        <h3 class="news-title"><a href="https://github.com/yukincom/yuno-chan-api" target="_blank">yukincom/yuno-chan-api</a></h3>
+                        <p class="news-summary">Talking home assistant for M5Stack / スタックチャン —  English learning, schedule announcements, weather,  flexible name maskin | ⭐ 0 stars</p>
                         <div class="news-meta">
                             <span class="news-source">GitHub</span>
                             <span>·</span>
@@ -458,7 +511,7 @@
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-header-left">
                         <span class="section-icon">■</span>
-                        <span class="section-title">海外讨论</span>
+                        <span class="section-title">海外前沿讨论</span>
                         <span class="section-count">7条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
@@ -507,7 +560,7 @@
 
                     <article class="news-item">
                         <h3 class="news-title"><a href="https://rjcorwin.github.io/cook/" target="_blank">Cook: A simple CLI for orchestrating Claude Code</a></h3>
-                        <p class="news-summary">25 points · 5 comments</p>
+                        <p class="news-summary">42 points · 12 comments</p>
                         <div class="news-meta">
                             <span class="news-source">Hacker News</span>
                             <span>·</span>
@@ -516,8 +569,8 @@
                     </article>
 
                     <article class="news-item">
-                        <h3 class="news-title"><a href="https://www.quantamagazine.org/the-math-that-explains-why-bell-curves-are-everywhere-20260316/" target="_blank">The math that explains why bell curves are everywhere</a></h3>
-                        <p class="news-summary">72 points · 36 comments</p>
+                        <h3 class="news-title"><a href="https://haskellforall.com/2026/03/a-sufficiently-detailed-spec-is-code" target="_blank">A sufficiently detailed spec is code</a></h3>
+                        <p class="news-summary">22 points · 3 comments</p>
                         <div class="news-meta">
                             <span class="news-source">Hacker News</span>
                             <span>·</span>
@@ -527,7 +580,7 @@
 
                     <article class="news-item">
                         <h3 class="news-title"><a href="https://mlbenchmarks.org/00-preface.html" target="_blank">Book: The Emerging Science of Machine Learning Benchmarks</a></h3>
-                        <p class="news-summary">97 points · 4 comments</p>
+                        <p class="news-summary">99 points · 4 comments</p>
                         <div class="news-meta">
                             <span class="news-source">Hacker News</span>
                             <span>·</span>
@@ -541,7 +594,7 @@
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-header-left">
                         <span class="section-icon">■</span>
-                        <span class="section-title">国内动态</span>
+                        <span class="section-title">国内行业动态</span>
                         <span class="section-count">5条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
@@ -608,7 +661,7 @@
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-header-left">
                         <span class="section-icon">🎨</span>
-                        <span class="section-title">新品动态</span>
+                        <span class="section-title">AI设计新品动态</span>
                         <span class="section-count">5条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
@@ -671,7 +724,7 @@
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-header-left">
                         <span class="section-icon">✨</span>
-                        <span class="section-title">案例赏析</span>
+                        <span class="section-title">AI案例赏析</span>
                         <span class="section-count">5条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
@@ -734,7 +787,7 @@
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-header-left">
                         <span class="section-icon">🛠️</span>
-                        <span class="section-title">工具创新</span>
+                        <span class="section-title">设计工具的AI创新</span>
                         <span class="section-count">5条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
@@ -797,7 +850,7 @@
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-header-left">
                         <span class="section-icon">🤖</span>
-                        <span class="section-title">OpenClaw</span>
+                        <span class="section-title">OpenClaw对设计的影响</span>
                         <span class="section-count">5条</span>
                     </div>
                     <span class="toggle-btn">▼</span>
@@ -856,28 +909,50 @@
                 </div>
             </section>
         </div>
+        </main>
+        
+        <!-- 右侧二级导航 -->
+        <aside class="right-sidebar" id="right-sidebar">
+            <div class="right-sidebar-title">模块导航</div>
+            
+            <!-- 全球AI模块 -->
+            <div class="module-nav-content active" id="modules-global">
+                <button class="module-btn" onclick="scrollToModule('global-industry')">行业与商业</button>
+                <button class="module-btn" onclick="scrollToModule('global-research')">学术研究</button>
+                <button class="module-btn" onclick="scrollToModule('global-products')">新品动态</button>
+                <button class="module-btn" onclick="scrollToModule('global-tech')">技术实践</button>
+                <button class="module-btn" onclick="scrollToModule('global-overseas')">海外前沿讨论</button>
+                <button class="module-btn" onclick="scrollToModule('global-domestic')">国内行业动态</button>
+            </div>
+            
+            <!-- AI设计模块 -->
+            <div class="module-nav-content" id="modules-design">
+                <button class="module-btn design" onclick="scrollToModule('design-new_products')">AI设计新品动态</button>
+                <button class="module-btn design" onclick="scrollToModule('design-cases')">AI案例赏析</button>
+                <button class="module-btn design" onclick="scrollToModule('design-tool_innovation')">设计工具的AI创新</button>
+                <button class="module-btn design" onclick="scrollToModule('design-openclaw_design')">OpenClaw对设计的影响</button>
+            </div>
+        </aside>
     </div>
     
     <footer>
         <p>AI日报 · 2026年03月19日</p>
-        <p style="margin-top:8px;">全球AI资讯 · AI设计专题 · 每日更新</p>
     </footer>
     
     <script>
         // 切换专题
         function switchTopic(topic) {
-            // 更新按钮状态
+            // 更新左侧专题按钮状态
             document.querySelectorAll('.topic-btn').forEach(btn => {
-                btn.classList.remove('active', 'design-active');
+                btn.classList.remove('active');
                 if (btn.dataset.topic === topic) {
                     btn.classList.add('active');
-                    if (topic === 'design') btn.classList.add('design-active');
                 }
             });
             
-            // 切换模块导航
-            document.querySelectorAll('.module-nav').forEach(nav => nav.classList.remove('visible'));
-            document.getElementById('module-nav-' + topic).classList.add('visible');
+            // 切换右侧模块导航
+            document.querySelectorAll('.module-nav-content').forEach(nav => nav.classList.remove('active'));
+            document.getElementById('modules-' + topic).classList.add('active');
             
             // 切换内容
             document.querySelectorAll('.topic-content').forEach(content => content.classList.remove('active'));
