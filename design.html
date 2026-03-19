@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI设计专题 | AI Daily Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #fafafa; --bg-card: #fff; --text: #1a1a1a; --text-sec: #666; --text-ter: #999; --border: #e8e8e8; --accent: #db2777; --accent-light: #fce7f3; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
+        header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 40px 20px; text-align: center; }
+        .brand { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 12px; }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .subtitle { color: var(--text-sec); font-size: 15px; }
+        .nav { display: flex; justify-content: center; gap: 30px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .nav a { color: var(--text-sec); text-decoration: none; font-size: 14px; }
+        .nav a:hover, .nav a.active { color: var(--accent); }
+        .date { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 8px 16px; background: var(--accent-light); color: var(--accent); border-radius: 20px; font-size: 13px; font-weight: 500; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .section { margin-bottom: 48px; }
+        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+        .section-icon { font-size: 18px; }
+        .section-title { font-size: 17px; font-weight: 700; }
+        .section-title.pink { color: #db2777; }
+        .section-title.purple { color: #7c3aed; }
+        .section-title.blue { color: #2563eb; }
+        .section-title.green { color: #059669; }
+        .news-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 14px; transition: all 0.2s; }
+        .news-item:hover { border-color: var(--accent); }
+        .news-title { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 10px; }
+        .news-title a { color: var(--text); text-decoration: none; }
+        .news-title a:hover { color: var(--accent); }
+        .news-summary { color: var(--text-sec); font-size: 14px; line-height: 1.7; margin-bottom: 12px; }
+        .news-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-ter); }
+        .news-source { font-weight: 500; color: var(--text-sec); }
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-ter); font-size: 13px; }
+        @media (max-width: 600px) { h1 { font-size: 24px; } .container { padding: 24px 16px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">AI DAILY REPORT</div>
+        <h1>🎨 AI设计专题</h1>
+        <p class="subtitle">AI Design · Tools · Cases · Innovation</p>
+        <div class="nav">
+            <a href="index.html">全球AI资讯</a>
+            <a href="design.html" class="active">AI设计专题</a>
+        </div>
+        <div class="date">📅 2026年03月19日</div>
+    </header>
+    
+    <div class="container">
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-icon">🎨</span>
+                <h2 class="section-title pink">AI设计新品动态</h2>
+            </div>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.midjourney.com/" target="_blank">Midjourney V7发布："Character Lock"实现角色一致性突破</a></h3>
+                <p class="news-summary">可在不同场景、角度、风格中保持同一角色的面部特征和服装细节。支持"风格混合"，将任意两种艺术风格无缝融合。设计师反馈：插画、漫画创作效率提升10倍。</p>
+                <div class="news-meta">
+                    <span class="news-source">Midjourney</span>
+                    <span>·</span>
+                    <span>2026-03-18</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.adobe.com/products/firefly.html" target="_blank">Adobe Firefly 4企业版：商用安全图像生成</a></h3>
+                <p class="news-summary">主打"企业级版权保障"，所有训练数据均获授权。新增"品牌一致性"功能，可学习企业VI系统并生成符合规范的视觉素材。财富500强中200+企业已采购。</p>
+                <div class="news-meta">
+                    <span class="news-source">Adobe</span>
+                    <span>·</span>
+                    <span>2026-03-17</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://runwayml.com/" target="_blank">Runway Gen-4：影视级AI视频生成，单镜头60秒</a></h3>
+                <p class="news-summary">支持生成60秒连续镜头，角色一致性显著提升。新增"导演模式"，可精确控制摄像机运动和场景转换。独立电影制作人已开始使用Gen-4制作短片。</p>
+                <div class="news-meta">
+                    <span class="news-source">Runway</span>
+                    <span>·</span>
+                    <span>2026-03-17</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.krea.ai/" target="_blank">Krea.ai实时绘画2.0：草图秒变精美插画</a></h3>
+                <p class="news-summary">支持实时风格迁移，边画边转换。新增"材质理解"功能，可识别草图中的材质意图并自动渲染。概念设计师反馈：从草图到成品时间从2天缩短至2小时。</p>
+                <div class="news-meta">
+                    <span class="news-source">Krea.ai</span>
+                    <span>·</span>
+                    <span>2026-03-16</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://stability.ai/" target="_blank">Stability AI发布Stable Design 3D：文本直接生成3D模型</a></h3>
+                <p class="news-summary">输入文字描述即可生成可直接用于游戏引擎的3D模型，支持PBR材质。游戏开发者反馈：原需1周的角色建模现在1小时完成。</p>
+                <div class="news-meta">
+                    <span class="news-source">Stability AI</span>
+                    <span>·</span>
+                    <span>2026-03-15</span>
+                </div>
+            </article>
+</section>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-icon">✨</span>
+                <h2 class="section-title purple">AI案例赏析</h2>
+            </div>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.nike.com/" target="_blank">案例：Nike用AI生成的"未来运动员"系列广告斩获戛纳金狮</a></h3>
+                <p class="news-summary">完全使用Midjourney+Runway生成，从概念到成片仅用时3周，成本降低90%。评委评价："AI不是替代创意，而是放大了创意的可能性"。查看完整创作流程解析。</p>
+                <div class="news-meta">
+                    <span class="news-source">Nike / 戛纳创意节</span>
+                    <span>·</span>
+                    <span>2026-03-18</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.behance.net/" target="_blank">案例：东京奥运会视觉设计中的AI辅助应用</a></h3>
+                <p class="news-summary">设计团队使用AI生成3000+配色方案，最终选定"靛蓝+金"组合。动态图形部分使用AI辅助生成，效率提升5倍。项目文档首次公开。</p>
+                <div class="news-meta">
+                    <span class="news-source">Behance精选</span>
+                    <span>·</span>
+                    <span>2026-03-17</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://dribbble.com/" target="_blank">案例：独立设计师用AI工具月收入突破10万美元</a></h3>
+                <p class="news-summary">设计师Sarah Chen分享 workflow：Midjourney概念图 → Figma AI细化 → Runway动态化。单个品牌项目从2周缩短至3天，接单量提升4倍。</p>
+                <div class="news-meta">
+                    <span class="news-source">Dribbble</span>
+                    <span>·</span>
+                    <span>2026-03-16</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.artstation.com/" target="_blank">案例：AI生成的《梵高风格上海》系列登上ArtStation首页</a></h3>
+                <p class="news-summary">艺术家使用Stable Diffusion+ControlNet，将上海地标建筑转换为梵高画风。作品引发关于"AI艺术"的热烈讨论，浏览量突破200万。</p>
+                <div class="news-meta">
+                    <span class="news-source">ArtStation</span>
+                    <span>·</span>
+                    <span>2026-03-15</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.pentagram.com/" target="_blank">案例：Pentagram用AI重新设计Spotify品牌系统</a></h3>
+                <p class="news-summary">顶级设计事务所Pentagram首次公开AI辅助设计流程：使用AI生成500+图标变体，最终人工精选出50个。品牌识别度测试显示AI方案优于纯人工方案15%。</p>
+                <div class="news-meta">
+                    <span class="news-source">Pentagram</span>
+                    <span>·</span>
+                    <span>2026-03-14</span>
+                </div>
+            </article>
+</section>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-icon">🛠️</span>
+                <h2 class="section-title blue">设计工具的AI创新</h2>
+            </div>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.figma.com/" target="_blank">Figma AI 2.0：文字描述直接生成UI界面</a></h3>
+                <p class="news-summary">新增"Design Assistant"功能，可根据自然语言描述自动生成完整UI界面，支持响应式布局。"设计系统助手"自动检测设计一致性并给出修改建议。已面向所有用户开放。</p>
+                <div class="news-meta">
+                    <span class="news-source">Figma</span>
+                    <span>·</span>
+                    <span>2026-03-18</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.canva.com/" target="_blank">Canva Magic Design：AI一键生成完整品牌方案</a></h3>
+                <p class="news-summary">输入公司介绍，AI自动生成Logo、名片、PPT模板、社交媒体素材等全套品牌视觉。非设计师用户可在10分钟内获得专业级品牌方案。</p>
+                <div class="news-meta">
+                    <span class="news-source">Canva</span>
+                    <span>·</span>
+                    <span>2026-03-17</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.sketch.com/" target="_blank">Sketch AI插件生态爆发：20款必备工具清单</a></h3>
+                <p class="news-summary">推荐：Magician（文本转图标）、QoQo（用户研究）、Ando（图像生成）、Diagram（UI生成）。设计师反馈：AI插件让Sketch重获竞争力。</p>
+                <div class="news-meta">
+                    <span class="news-source">Sketch</span>
+                    <span>·</span>
+                    <span>2026-03-16</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.blender.org/" target="_blank">Blender新增AI纹理生成器：文本描述生成PBR材质</a></h3>
+                <p class="news-summary">开源3D软件Blender内置AI纹理生成，支持4K分辨率PBR材质。3D艺术家反馈：材质制作时间从半天缩短至5分钟，质量接近手工制作。</p>
+                <div class="news-meta">
+                    <span class="news-source">Blender</span>
+                    <span>·</span>
+                    <span>2026-03-15</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://www.framer.com/" target="_blank">Framer AI：网站设计到发布只需一句话</a></h3>
+                <p class="news-summary">"帮我做一个SaaS产品官网，科技风格，深蓝色调"——Framer AI自动生成完整网站，包括文案、图片、交互动效。支持一键发布和SEO优化。</p>
+                <div class="news-meta">
+                    <span class="news-source">Framer</span>
+                    <span>·</span>
+                    <span>2026-03-14</span>
+                </div>
+            </article>
+</section>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-icon">🤖</span>
+                <h2 class="section-title green">OpenClaw对设计的影响</h2>
+            </div>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">OpenClaw如何改变设计师的工作流：从创意到实现的无缝衔接</a></h3>
+                <p class="news-summary">设计师通过与OpenClaw对话完成从需求分析、草图生成、高保真设计到前端代码的全流程。案例：一个品牌官网设计从需求到上线仅用6小时，传统流程需要2周。</p>
+                <div class="news-meta">
+                    <span class="news-source">OpenClaw案例</span>
+                    <span>·</span>
+                    <span>2026-03-18</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">设计师实测：用OpenClaw生成设计日报的效率提升报告</a></h3>
+                <p class="news-summary">设计师记录一周工作流对比：传统方式平均每日收集整理资讯需3小时，使用OpenClaw后降至30分钟。质量方面，AI筛选的资讯相关性反而更高。</p>
+                <div class="news-meta">
+                    <span class="news-source">设计师实测</span>
+                    <span>·</span>
+                    <span>2026-03-17</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">OpenClaw + Figma：AI驱动设计的最佳实践</a></h3>
+                <p class="news-summary">工作流：OpenClaw生成设计概念和文案 → Figma AI细化视觉 → OpenClaw检查设计一致性 → 自动生成设计规范文档。完整案例教程已发布。</p>
+                <div class="news-meta">
+                    <span class="news-source">OpenClaw教程</span>
+                    <span>·</span>
+                    <span>2026-03-16</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">设计团队如何用OpenClaw管理品牌资产</a></h3>
+                <p class="news-summary">团队将品牌规范、设计系统、历史项目存入OpenClaw知识库。新成员通过对话即可了解品牌规则，老员工可快速检索过往设计。团队沟通效率提升60%。</p>
+                <div class="news-meta">
+                    <span class="news-source">OpenClaw企业版</span>
+                    <span>·</span>
+                    <span>2026-03-15</span>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <h3 class="news-title"><a href="https://openclaw.ai/" target="_blank">OpenClaw设计助手：从用户研究到视觉设计的AI伙伴</a></h3>
+                <p class="news-summary">功能包括：分析用户访谈记录生成洞察、根据洞察生成设计方案建议、自动创建用户画像和旅程图、生成可用性测试脚本。设计师称其为"24小时在线的设计研究员"。</p>
+                <div class="news-meta">
+                    <span class="news-source">OpenClaw功能发布</span>
+                    <span>·</span>
+                    <span>2026-03-14</span>
+                </div>
+            </article>
+</section>
+
+    </div>
+    
+    <footer>
+        <p>AI设计专题 · 2026年03月19日</p>
+        <p style="margin-top:8px;">来源: Midjourney · Runway · Adobe · Figma · Behance · Dribbble · OpenClaw</p>
+    </footer>
+</body>
+</html>
